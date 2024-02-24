@@ -1,3 +1,3 @@
-# LibraryCatalog
+# Library Catalog
 A transaction of borrowing/returning of books in a library through an online website.
 > This full stack web application helps our benefactor, which is a Library of any kind, particularly a public use by a city or inside a school where students will use. It is a web application to make users borrow and return books from a library through an online website making it easier to track borrowed and returned books. Admins of the website can track the user that borrowed/returned books, they can also flag a user for an overdue book that is not return, or a book that has been damaged. Flagging a user means they have to pay a fine for the damages or being overdue.  
