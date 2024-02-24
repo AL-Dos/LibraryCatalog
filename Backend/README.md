@@ -1,1 +1,2 @@
-### _This is where the Backend code of the library catalog project is sorted_
+# Backend
+This is where the frontend code for the library catalog fullstack porject is located.
