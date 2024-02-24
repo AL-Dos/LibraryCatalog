@@ -1,1 +1,2 @@
-# This is where the frontend code for the library catalog is located.
+# Frontend 
+This is where the frontend code for the library catalog fullstack porject is located.
