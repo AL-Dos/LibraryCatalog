@@ -25,7 +25,7 @@ This full-stack web application allows users to borrow and return books from a l
 4. **Quick Access**
 > People can view the available books in the library very quickly by accessing the inventory of the system.
 
-#### Project Contributors
+### Project Contributors
 * Daniel Gallego
 * Nicklaus Ling
 * Aldous Omictin
