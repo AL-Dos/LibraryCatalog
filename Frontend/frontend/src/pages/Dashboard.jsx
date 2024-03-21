@@ -5,11 +5,6 @@ import dashboard from '../assets/dashboard.png';
 import setting from '../assets/gear.png';
 import category from '../assets/options-lines.png';
 import user from '../assets/user.png';
-import total from '../assets/1.jpg';
-import available from '../assets/2.jpg';
-import returned from '../assets/3.jpg';
-import users from '../assets/4.jpg';
-import issue from '../assets/5.jpg';
 import logout from '../assets/logout.png';
 import { useNavigate } from 'react-router-dom';
 
