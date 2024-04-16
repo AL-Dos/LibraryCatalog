@@ -1,11 +1,9 @@
-# React + Vite
-
-What to install once you have finished "git clone ...."
--npm install
--cd LibraryCatalog
--cd Frontend
--cd frontend
--npm run dev
+# What to install once you have finished "git clone ...."
+- npm install
+- cd LibraryCatalog
+- cd Frontend
+- cd frontend
+- npm run dev
 
 Currently, two official plugins are available:
 
