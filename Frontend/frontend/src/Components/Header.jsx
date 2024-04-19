@@ -37,20 +37,20 @@ const Header = () => {
         <img src={logo} className='logo' />
       </div>
       <div className='nav font-raleway'>
-        <button className='hover' onClick={handleDashboardBttn}>DASHBOARD</button>
+        <button data-testid="dashboardButton" className='hover' onClick={handleDashboardBttn}>DASHBOARD</button>
         <div className='flex flex-col'>
-          <button className='hover' onClick={handleBooksBttn}>BOOKS</button>
+          <button data-testid="booksButton" className='hover' onClick={handleBooksBttn}>BOOKS</button>
         </div>
         <div className='flex flex-col'>
-          <button className='hover' onClick={handleCategoryBttn}>CATEGORIES</button>
+          <button data-testid="categoriesButton" className='hover' onClick={handleCategoryBttn}>CATEGORIES</button>
         </div>
-        <button className='hover' onClick={handleIssueReqBttn}>REQUESTS</button>
+        <button data-testid="requestsButton" className='hover' onClick={handleIssueReqBttn}>REQUESTS</button>
         <div className='flex flex-col'>
-          <button className='hover' onClick={handleUsersBttn}>USERS</button>
+          <button data-testid="usersButton" className='hover' onClick={handleUsersBttn}>USERS</button>
         </div>
       </div>
       <div className='flex'>
-        <button><img src={logout} className='w-7' onClick={handleLogoutBttn} /></button>
+        <button data-testid="logoutButton"><img src={logout} className='w-7' onClick={handleLogoutBttn} /></button>
       </div>
     </div>
   )
