@@ -44,7 +44,7 @@ const AdminBooks = () => {
                             </div>
                             <div class='form'>
                                 <label class='text-xs text-left font-raleway'>Book Cover:</label>
-                                <input type='file' id='fileInput' accept='image/*'/>
+                                <input type='file' id='fileInput' accept='image/*' />
                             </div>
 
                             <div className='form mt-5'>
@@ -52,7 +52,11 @@ const AdminBooks = () => {
                             </div>
                         </div>
                         <div className='w-5/12 h-full flex items-center justify-center'>
-                            <Books />
+                            <div className='flex flex-col items-center w-screen h-full gap-5'>
+                                <ul className='w-full h-full flex flex-col items-center justify-evenly gap-5 overflow-y-auto'>
+{/* Image Preview */}               <Books Number='1' Title='Naruto Shippuden' Author='Masashi Kishimoto' Category='Anime' Status='Available' />
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
