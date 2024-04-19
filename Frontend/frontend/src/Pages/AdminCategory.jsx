@@ -32,7 +32,23 @@ const AdminCategory = () => {
               </div>
             </div>
             <div className='w-5/12 h-full flex items-center justify-center'>
-              <Category />
+              <div className='w-full h-full border rounded-xl bg-slate-300 bg-opacity-30 backdrop-blur-md'>
+                <table class="table-auto w-full">
+                  <thead>
+                    <tr className='border-b font-bebas underline text-3xl text-white'>
+                      <th className='p-5'>#</th>
+                      <th>Category</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <Category Number='1' Category='Anime' Status='Active'/>
+                    <Category Number='2' Category='Fiction' Status='Inactive'/>
+                    <Category Number='3' Category='Non_Fiction' Status='Inactive'/>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
