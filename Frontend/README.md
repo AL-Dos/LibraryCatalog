@@ -6,6 +6,9 @@
 - npm run dev
 
 # Unit Testing for the components are inside the Unit Testing Branch
+- Header
+- Category
+- Books
 
 Currently, two official plugins are available:
 
