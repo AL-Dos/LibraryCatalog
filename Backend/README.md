@@ -33,5 +33,6 @@ This is where the frontend code for the library catalog full-stack project is lo
    ```
 
 # Links
+Pre-requisite links that you need to download  
 Python: <https://www.python.org/downloads/>  
 PostgreSQL: <https://www.enterprisedb.com/downloads/postgres-postgresql-downloads>
