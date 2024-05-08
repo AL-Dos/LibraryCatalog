@@ -3,7 +3,7 @@ This is where the frontend code for the library catalog full-stack project is lo
 
 # Setup
 1. Install Python 3.12.2 or higher
-2. Install Django 5.0.3 or higher
+2. Install Django 5.0.3 or higher  
    a. Install pip
    ```
    python -m pip install -U pip
@@ -16,7 +16,7 @@ This is where the frontend code for the library catalog full-stack project is lo
    ```
    pip install django
    ```
-4. Install Djangorestframework and Django-cors-headers
+4. Install Djangorestframework and Django-cors-headers  
    a. DRF
    ```
    pip install djangorestframework
