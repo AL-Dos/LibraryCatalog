@@ -8,11 +8,7 @@ This is where the backend code for the library catalog full-stack project is loc
    ```
    python -m pip install -U pip
    ```
-   b. Create virtual environment
-   ```
-   python -m venv env_name
-   ``` 
-   c. Django setup
+   b. Django setup
    ```
    pip install django
    ```
