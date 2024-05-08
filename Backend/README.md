@@ -1,5 +1,5 @@
 # Backend
-This is where the frontend code for the library catalog full-stack project is located.
+This is where the backend code for the library catalog full-stack project is located.
 
 # Setup
 1. Install Python 3.12.2 or higher
