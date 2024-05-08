@@ -8,7 +8,7 @@ npm install
 ```
 2. React-Slick
 ```
-- npm install react-slick --save
+npm install react-slick --save
 ```
 
 # Navigation
@@ -28,4 +28,5 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 # Links
+Pre-requisite links that you need to download  
 Node.js: <https://nodejs.org/en/download>
