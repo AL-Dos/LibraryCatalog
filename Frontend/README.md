@@ -1,5 +1,6 @@
 # What to install once you have finished "git clone ...."
 - npm install
+- npm install react-slick --save
 - cd LibraryCatalog
 - cd Frontend
 - cd frontend
