@@ -31,6 +31,11 @@ This is where the frontend code for the library catalog full-stack project is lo
    ```
    pip install psycopg2
    ```
+# Navigation
+Backend > my_env > Scripts > Backend > backend
+```
+python manage.py runserver
+```
 
 # Links
 Pre-requisite links that you need to download  
