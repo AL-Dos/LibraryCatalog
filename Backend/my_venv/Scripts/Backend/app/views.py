@@ -11,7 +11,8 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        user = serializer.save()
+        user.save()
         return Response(serializer.data)
 
 
@@ -61,6 +62,31 @@ class UserView(APIView):
         user = User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
         return Response(serializer.data)
+    
+    def put(self, request):
+        token = request.COOKIES.get('jwt')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+        try:
+            payload = jwt.decode(jwt=token, key='secret', algorithms=["HS256"])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        user = User.objects.filter(id=payload['id']).first()
+
+        new_email = request.data.get('email')
+        if new_email:
+            existing_user_with_email = User.objects.filter(email=new_email).exclude(id=user.id).first()
+            if existing_user_with_email:
+                return Response({'Email already exists'}, status=400)
+
+            user.email = new_email
+            user.save()
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response({'Insert your Email'}, status=400)    
 
 
 class LogoutView(APIView):
@@ -70,4 +96,4 @@ class LogoutView(APIView):
         response.data = {
             'message': 'success'
         }
-        return response
+        return response 

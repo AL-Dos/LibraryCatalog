@@ -8,16 +8,34 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-
-        if (email === 'admin@gmail.com' && password === 'adminonly123') {
-            navigate('/admindashboard');
-        }
-        else if (email === 'user@gmail.com' && password === 'useronly123') {
-            navigate('/userdashboard');
-        }
-        else {
-            alert('Incorrect Password!');
+    const handleLogin = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                // Save JWT token to local storage
+                localStorage.setItem('jwt', data.jwt);
+                // Redirect to appropriate dashboard based on user role
+                if (email === 'admin@gmail.com') {
+                    navigate('/admindashboard');
+                } else {
+                    navigate('/userdashboard');
+                }
+            } else {
+                alert(data.detail);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
         }
     };
 
