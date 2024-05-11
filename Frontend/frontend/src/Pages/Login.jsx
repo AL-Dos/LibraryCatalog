@@ -26,7 +26,7 @@ const Login = () => {
             <div className='flex justify-between text-center'>
                 <div className='w-3/6 h-screen flex items-center justify-center'>
                     <div className='h-3/6 w-5/6 bg-white bg-opacity-50 backdrop-blur-md shadow-xl border-4 rounded-xl border-white flex flex-col items-center justify-evenly'>
-                        <h1 className='text-5xl text-white font-play font-black px-5'>WELCOME TO THE<br/>LIBRARY!</h1>
+                        <h1 className='text-5xl text-black font-play font-black px-5'>WELCOME TO THE<br/>LIBRARY!</h1>
                         <div className='flex flex-col w-full items-center gap-5'>
                             <div className='flex flex-col w-6/12 gap-1 text-left'>
                                 <label htmlFor='email'>Email</label>
@@ -50,6 +50,7 @@ const Login = () => {
                             </div>
                             <div className='flex flex-row w-6/12 justify-between my-2'>
                                 <button className='button' onClick={handleLogin}>Sign In</button>
+                                <button className='button' onClick={handleLogin}>Sign Up</button>
                             </div>
                         </div>
                     </div>
