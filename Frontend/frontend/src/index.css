@@ -40,7 +40,7 @@
 }
 
 .textfield {
-    @apply py-4 px-3 border rounded-lg font-raleway;
+    @apply py-3 px-2 border font-raleway;
 }
 
 .button {

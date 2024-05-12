@@ -23,10 +23,6 @@ const Header = () => {
     navigate('/adminissuebooks');
   };
 
-  const handleUsersBttn = () => {
-    navigate('/adminusers');
-  };
-
   const handleLogoutBttn = () => {
     navigate('/');
   };
@@ -45,9 +41,6 @@ const Header = () => {
           <button className='hover' onClick={handleCategoryBttn}>CATEGORIES</button>
         </div>
         <button className='hover' onClick={handleIssueReqBttn}>REQUESTS</button>
-        <div className='flex flex-col'>
-          <button className='hover' onClick={handleUsersBttn}>USERS</button>
-        </div>
       </div>
       <div className='flex'>
         <button><img src={logout} className='w-7' onClick={handleLogoutBttn} /></button>
