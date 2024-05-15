@@ -11,11 +11,6 @@ npm install
 npm install react-slick --save
 ```
 
-# Navigation
-Frontend > frontend
-```
-npm run dev
-```
 # Unit Testing
 Access the components inside the Unit Testing Branch  
 - Header
