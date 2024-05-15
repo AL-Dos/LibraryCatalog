@@ -25,6 +25,18 @@ This full-stack web application allows users to borrow and return books from a l
 4. **Quick Access**
 > People can view the available books in the library very quickly by accessing the inventory of the system.
 
+## Libraries
+1. React
+``` npm install ```
+2. Django Rest Framework
+``` pip install djangorestframework ```
+3. ReactDom
+``` npm install react react-dom ```
+4. Django Cors Headers
+``` pip install django-cors-headers ```
+5. Axios
+``` npm install react-axios ```
+
 ### Project Contributors
 * Daniel Gallego
 * Nicklaus Ling
