@@ -27,10 +27,43 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique=True)    
     username = None
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
 
     objects = CustomUserManager()
+
+class Genre(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Book(models.Model):
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    is_borrowed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
+
+class Borrow(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    borrowed_date = models.DateTimeField(auto_now_add=True)
+    return_date = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.user.name} - {self.book.title}"
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    books = models.ManyToManyField(Book, through='CartItem')
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)

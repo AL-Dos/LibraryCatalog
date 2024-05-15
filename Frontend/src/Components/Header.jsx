@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import logo from '../Assets/adlogo.png'
 import logout from '../Assets/logout.png'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
@@ -23,6 +23,10 @@ const Header = () => {
     navigate('/adminissuebooks');
   };
 
+  const handleUserListBttn = () => {
+    navigate('/adminlist')
+  }
+
   const handleLogoutBttn = () => {
     navigate('/');
   };
@@ -39,6 +43,9 @@ const Header = () => {
         </div>
         <div className='flex flex-col'>
           <button className='hover' onClick={handleCategoryBttn}>CATEGORIES</button>
+        </div>
+        <div className='flex flex-col'>
+          <button className='hover' onClick={handleUserListBttn}>USERS</button>
         </div>
         <button className='hover' onClick={handleIssueReqBttn}>REQUESTS</button>
       </div>

@@ -1,13 +1,22 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from .serializers import UserSerializer
+from .serializers import UserSerializer, BookSerializer, GenreSerializer, BorrowSerializer, CartItemSerializer, CartSerializer
 from rest_framework.response import Response
-from .models import User
+from .models import User, Book, Genre, Borrow, CartItem, Cart
+from rest_framework import generics
+from rest_framework.generics import ListAPIView
 from rest_framework import status
+from rest_framework.permissions import BasePermission
+from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAdminUser
 import jwt, datetime
 
 # Create your views here.
+
+class IsAdminUser(BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.is_superuser
 
 class RegisterView(APIView):
     def post(self, request):
@@ -33,6 +42,7 @@ class LoginView(APIView):
 
         payload = {
             'id': user.id,
+            'role': 'admin' if user.is_staff else 'user',
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
             'iat': datetime.datetime.utcnow()
         }
@@ -44,10 +54,10 @@ class LoginView(APIView):
         response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
             'jwt': token,
-            'userName': user.name
+            'userName': user.name,
+            'role': 'admin' if user.is_superuser else 'user'
         }
         return response
-
 
 class UserView(APIView):
 
@@ -76,3 +86,98 @@ class LogoutView(APIView):
             'message': 'success'
         }
         return response 
+    
+class AdminDashboard(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]   
+
+class TotalUsersView(APIView):
+    def get(self, request):
+        total_users = User.objects.exclude(is_staff=True).count()
+        return Response({'total_users': total_users})
+    
+class UserListView(ListAPIView):
+    queryset = User.objects.filter(is_staff=False)  # Exclude admin users
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]  # Optional: Add permission classes as needed    
+    
+class BookListView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+class BookDetailView(generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+class GenreListView(generics.ListAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+class GenreDetailView(generics.RetrieveAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+class BorrowListView(generics.ListAPIView):
+    queryset = Borrow.objects.all()
+    serializer_class = BorrowSerializer
+
+class BorrowDetailView(generics.RetrieveAPIView):
+    queryset = Borrow.objects.all()
+    serializer_class = BorrowSerializer
+
+class CartDetailView(generics.RetrieveAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
+class AddToCartView(APIView):
+    def post(self, request):
+        user = request.user
+        book_id = request.data.get('book_id')
+        quantity = request.data.get('quantity', 1)
+
+        try:
+            book = Book.objects.get(pk=book_id)
+        except Book.DoesNotExist:
+            return Response({"error": "Book does not exist."}, status=status.HTTP_404_NOT_FOUND)
+
+        cart, _ = Cart.objects.get_or_create(user=user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, book=book)
+
+        if not created:
+            cart_item.quantity += int(quantity)
+            cart_item.save()
+
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
+
+class RemoveFromCartView(APIView):
+    def post(self, request):
+        user = request.user
+        book_id = request.data.get('book_id')
+
+        try:
+            book = Book.objects.get(pk=book_id)
+        except Book.DoesNotExist:
+            return Response({"error": "Book does not exist."}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            cart = Cart.objects.get(user=user)
+            cart_item = CartItem.objects.get(cart=cart, book=book)
+            cart_item.delete()
+        except Cart.DoesNotExist:
+            pass
+        except CartItem.DoesNotExist:
+            pass
+
+        return Response({"message": "Book removed from cart successfully."})
+
+class ClearCartView(APIView):
+    def post(self, request):
+        user = request.user
+        try:
+            cart = Cart.objects.get(user=user)
+            cart.items.all().delete()
+            cart.delete()
+        except Cart.DoesNotExist:
+            pass
+
+        return Response({"message": "Cart cleared successfully."})

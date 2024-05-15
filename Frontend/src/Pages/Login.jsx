@@ -25,8 +25,9 @@ const Login = () => {
                 // Save JWT token and user name to local storage
                 localStorage.setItem('jwt', data.jwt);
                 localStorage.setItem('userName', data.userName);  // Save user's name instead of email
+                localStorage.setItem('role', data.role);
                 // Redirect to appropriate dashboard based on user role
-                if (email === 'admin@gmail.com') {
+                if (data.role === 'admin') {
                     navigate('/admindashboard');
                 } else {
                     navigate('/userdashboard');

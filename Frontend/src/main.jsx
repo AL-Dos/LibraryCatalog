@@ -7,9 +7,10 @@ import AdminDashboard from './Pages/AdminDashboard'
 import AdminBooks from './Pages/AdminBooks';
 import AdminCategory from './Pages/AdminCategory';
 import AdminIssueB from './Pages/AdminIssueB';
-import  UserDashboard from './Pages/UserDashboard';
+import UserDashboard from './Pages/UserDashboard';
 import UserBag from './Pages/UserBag';
 import UserTime from './Pages/UserTime';
+import AdminList from './Pages/AdminList';
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path="/userdashboard" element={<UserDashboard />} />
       <Route path="/userbag" element={<UserBag />} />
       <Route path="/usertime" element={<UserTime />} />
+      <Route path="/adminlist" element={<AdminList />} />
     </Routes>
   </BrowserRouter>
 );
