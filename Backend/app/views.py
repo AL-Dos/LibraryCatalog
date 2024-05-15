@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from .models import User
 from rest_framework import status
 import jwt, datetime
-from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 
