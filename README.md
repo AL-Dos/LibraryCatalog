@@ -35,6 +35,14 @@ This full-stack web application allows users to borrow and return books from a l
 4. Django Cors Headers
 ``` pip install django-cors-headers ```
 5. Axios
+``` npm install axios ```
+6. Jwt-Decode
+``` npm install jwt-decode ```
+7. React-Slick
+``` npm install react-slick ```
+8. Slick-Carousel
+``` npm install slick-carousel ```
+9. React-Axios
 ``` npm install react-axios ```
 
 ### Project Contributors

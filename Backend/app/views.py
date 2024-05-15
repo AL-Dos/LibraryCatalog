@@ -7,16 +7,11 @@ from .models import User, Book, Genre, Borrow, CartItem, Cart
 from rest_framework import generics
 from rest_framework.generics import ListAPIView
 from rest_framework import status
-from rest_framework.permissions import BasePermission
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsAdminUser
 import jwt, datetime
 
 # Create your views here.
-
-class IsAdminUser(BasePermission):
-    def has_permission(self, request, view):
-        return request.user and request.user.is_superuser
 
 class RegisterView(APIView):
     def post(self, request):
@@ -97,8 +92,21 @@ class TotalUsersView(APIView):
     
 class UserListView(ListAPIView):
     queryset = User.objects.filter(is_staff=False)  # Exclude admin users
-    serializer_class = UserSerializer
-    permission_classes = [IsAdminUser]  # Optional: Add permission classes as needed    
+    serializer_class = UserSerializer   
+
+class UserDeleteView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def delete(self, request, user_id):
+        try:
+            user = User.objects.get(pk=user_id)
+            user.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except User.DoesNotExist:
+            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
     
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
