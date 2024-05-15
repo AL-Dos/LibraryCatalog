@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Register = () => {
     const [formData, setFormData] = useState({
-        username: '',
+        name: '',
         email: '',
         password: '',
         password2: ''
@@ -14,7 +14,7 @@ const Register = () => {
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
-    const { username, email, password, password2 } = formData;
+    const { name, email, password, password2 } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -27,7 +27,7 @@ const Register = () => {
             setErrors({ password2: "Passwords do not match" });
         } else {
             const newUser = {
-                username,
+                name,
                 email,
                 password
             };
@@ -62,9 +62,9 @@ const Register = () => {
                             <input
                                 placeholder='User Name'
                                 type="text"
-                                name="username"
+                                name="name"
                                 className='textfield p-2 border rounded'
-                                value={username}
+                                value={name}
                                 onChange={onChange}
                                 required
                             />
