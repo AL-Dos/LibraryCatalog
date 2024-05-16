@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import edit from '../Assets/editing.png';
 import remove from '../Assets/delete.png';
 import Header from '../Components/Header'
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
-    const token = localStorage.getItem('jwt'); // Retrieve JWT token from local storage
-    const userId = token ? jwt_decode(token).id : null; // Decode token to get userId
+    const token = localStorage.getItem('jwt');
+    const userId = token ? jwtDecode(token).id : null;
 
     useEffect(() => {
-        fetchUsers();
-    }, [userId]); // Fetch users whenever userId changes
+        if (userId) {
+            fetchUsers();
+        }
+    }, [userId]);
 
     const fetchUsers = async () => {
         try {
@@ -34,7 +36,7 @@ const UserList = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            // After successful deletion, fetch updated list of users
+            // Refresh user list after deletion
             fetchUsers();
         } catch (error) {
             console.error('Error deleting user:', error);
@@ -52,7 +54,6 @@ const UserList = () => {
             <ul className='w-full h-full flex flex-col items-center justify-evenly gap-5 overflow-y-auto'>
                 {users.map((user, index) => (
                     <li key={user.id} className='vcard'>
-                        {/* Display user information */}
                         <div className='w-4/12 h-full flex flex-col justify-evenly text-left'>
                             <h1 className='num'>#{index + 1}</h1>
                             <div>

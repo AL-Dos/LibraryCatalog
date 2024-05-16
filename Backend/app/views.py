@@ -1,13 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from .serializers import UserSerializer, BookSerializer, GenreSerializer, BorrowSerializer, CartItemSerializer, CartSerializer
+from .serializers import UserSerializer
 from rest_framework.response import Response
-from .models import User, Book, Genre, Borrow, CartItem, Cart
+from .models import User
 from rest_framework import generics
 from rest_framework.generics import ListAPIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
 from .permissions import IsAdminUser
 import jwt, datetime
 
@@ -95,97 +96,7 @@ class UserListView(ListAPIView):
     serializer_class = UserSerializer   
 
 class UserDeleteView(APIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
-
     def delete(self, request, user_id):
-        try:
-            user = User.objects.get(pk=user_id)
-            user.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except User.DoesNotExist:
-            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-    
-class BookListView(generics.ListAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-
-class BookDetailView(generics.RetrieveAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-
-class GenreListView(generics.ListAPIView):
-    queryset = Genre.objects.all()
-    serializer_class = GenreSerializer
-
-class GenreDetailView(generics.RetrieveAPIView):
-    queryset = Genre.objects.all()
-    serializer_class = GenreSerializer
-
-class BorrowListView(generics.ListAPIView):
-    queryset = Borrow.objects.all()
-    serializer_class = BorrowSerializer
-
-class BorrowDetailView(generics.RetrieveAPIView):
-    queryset = Borrow.objects.all()
-    serializer_class = BorrowSerializer
-
-class CartDetailView(generics.RetrieveAPIView):
-    queryset = Cart.objects.all()
-    serializer_class = CartSerializer
-
-class AddToCartView(APIView):
-    def post(self, request):
-        user = request.user
-        book_id = request.data.get('book_id')
-        quantity = request.data.get('quantity', 1)
-
-        try:
-            book = Book.objects.get(pk=book_id)
-        except Book.DoesNotExist:
-            return Response({"error": "Book does not exist."}, status=status.HTTP_404_NOT_FOUND)
-
-        cart, _ = Cart.objects.get_or_create(user=user)
-        cart_item, created = CartItem.objects.get_or_create(cart=cart, book=book)
-
-        if not created:
-            cart_item.quantity += int(quantity)
-            cart_item.save()
-
-        serializer = CartSerializer(cart)
-        return Response(serializer.data)
-
-class RemoveFromCartView(APIView):
-    def post(self, request):
-        user = request.user
-        book_id = request.data.get('book_id')
-
-        try:
-            book = Book.objects.get(pk=book_id)
-        except Book.DoesNotExist:
-            return Response({"error": "Book does not exist."}, status=status.HTTP_404_NOT_FOUND)
-
-        try:
-            cart = Cart.objects.get(user=user)
-            cart_item = CartItem.objects.get(cart=cart, book=book)
-            cart_item.delete()
-        except Cart.DoesNotExist:
-            pass
-        except CartItem.DoesNotExist:
-            pass
-
-        return Response({"message": "Book removed from cart successfully."})
-
-class ClearCartView(APIView):
-    def post(self, request):
-        user = request.user
-        try:
-            cart = Cart.objects.get(user=user)
-            cart.items.all().delete()
-            cart.delete()
-        except Cart.DoesNotExist:
-            pass
-
-        return Response({"message": "Cart cleared successfully."})
+        user = get_object_or_404(User, id=user_id)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

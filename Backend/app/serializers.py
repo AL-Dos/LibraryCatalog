@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Book, Genre, Borrow, Cart, CartItem
+from .models import User
 from django.contrib.auth.password_validation import validate_password
 
 class UserSerializer(serializers.ModelSerializer):
@@ -23,32 +23,3 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
-    
-class GenreSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Genre
-        fields = '__all__'
-
-class BookSerializer(serializers.ModelSerializer):
-    genre = GenreSerializer()
-
-    class Meta:
-        model = Book
-        fields = '__all__'
-
-class BorrowSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Borrow
-        fields = '__all__'   
-
-class CartItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CartItem
-        fields = '__all__'
-
-class CartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Cart
-        fields = '__all__' 

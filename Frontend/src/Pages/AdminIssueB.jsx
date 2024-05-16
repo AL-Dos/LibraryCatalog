@@ -5,7 +5,7 @@ const AdminIssueB = () => {
   return (
     <div>
       <div className='h-screen bg'>
-        <div className='blur'>
+        <div className='blurr'>
           <div className='z-40'>
             <Header />
           </div>
