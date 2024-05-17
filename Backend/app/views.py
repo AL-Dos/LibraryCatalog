@@ -4,7 +4,6 @@ from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer
 from rest_framework.response import Response
 from .models import User
-from rest_framework import generics
 from rest_framework.generics import ListAPIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -100,3 +99,14 @@ class UserDeleteView(APIView):
         user = get_object_or_404(User, id=user_id)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class UserViolationView(APIView):
+    def post(self, request, user_id):
+        violation_type = request.data.get('violation_type', None)
+        if violation_type is None:
+            return Response({'error': 'Violation type is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = get_object_or_404(User, id=user_id)
+        user.violation_type = violation_type
+        user.save()
+        return Response({'message': 'Violation marked successfully'}, status=status.HTTP_200_OK)
