@@ -42,7 +42,7 @@ class LoginView(APIView):
             'iat': datetime.datetime.utcnow()
         }
 
-        token = jwt.encode(payload, 'secret', 'HS256').decode('utf-8')
+        token = jwt.encode(payload, 'secret', 'HS256')
 
         response = Response()
 
