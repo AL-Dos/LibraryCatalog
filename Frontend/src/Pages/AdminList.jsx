@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import edit from '../Assets/editing.png';
 import remove from '../Assets/delete.png';
@@ -19,15 +18,15 @@ const UserList = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/users/', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const endpoint = '/users/';
+            if (!isSafePath(endpoint)) throw new Error('Unsafe path detected!');
+            
+            const response = await api.get(endpoint);
             setUsers(response.data);
+            
             const initialViolations = {};
             response.data.forEach(user => {
-                initialViolations[user.id] = user.violation_type || ''; // Default to empty if no violation
+                initialViolations[user.id] = user.violation_type || '';
             });
             setViolations(initialViolations);
         } catch (error) {
@@ -37,12 +36,11 @@ const UserList = () => {
 
     const deleteUser = async (userId) => {
         try {
-            await axios.delete(`http://localhost:8000/api/users/${userId}/`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            fetchUsers(); // Refresh user list after deletion
+            const endpoint = `/users/${userId}/`;
+            if (!isSafePath(endpoint)) throw new Error('Unsafe path detected!');
+            
+            await api.delete(endpoint);
+            fetchUsers();
         } catch (error) {
             console.error('Error deleting user:', error);
         }
@@ -51,14 +49,11 @@ const UserList = () => {
     const markViolation = async (userId) => {
         try {
             const violation_type = violations[userId];
-            await axios.post(`http://localhost:8000/api/users/${userId}/violation/`, {
-                violation_type
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            fetchUsers(); // Refresh user list after marking violation
+            const endpoint = `/users/${userId}/violation/`;
+            if (!isSafePath(endpoint)) throw new Error('Unsafe path detected!');
+            
+            await api.post(endpoint, { violation_type });
+            fetchUsers();
         } catch (error) {
             console.error('Error marking violation:', error);
         }
