@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../Assets/uslogo.png';
 import axios from 'axios';
+import {Icon} from 'react-icons-kit';
+import {eyeOff} from 'react-icons-kit/feather/eyeOff';
+import {eye} from 'react-icons-kit/feather/eye'
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -15,6 +18,19 @@ const Register = () => {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
     const { name, email, password, password2 } = formData;
+    const [type, setType] = useState('password');
+    const [icon, setIcon] = useState(eyeOff);
+
+        const handlePasswordToggle = async () => {
+            if (type === 'password') {
+                setIcon(eye);
+                setType('text');
+            }
+            else {
+                setIcon(eyeOff);
+                setType('password');
+            }
+        }
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -95,16 +111,21 @@ const Register = () => {
                             {errors.password && <p className='text-red-500 text-sm mt-1'>{errors.password}</p>}
                         </div>
                         <div className='flex flex-col w-6/12 gap-1 text-left'>
-                            <input
-                                placeholder='Confirm Password'
-                                type="password"
-                                name="password2"
-                                className='textfield p-2 border rounded'
-                                value={password2}
-                                onChange={onChange}
-                                required
-                            />
-                            {errors.password2 && <p className='text-red-500 text-sm mt-1'>{errors.password2}</p>}
+                            <div className='relative w-full'>
+                                <input
+                                    placeholder='Confirm Password'
+                                    type={type}
+                                    name="password2"
+                                    className='textfield p-2 border rounded w-full pr-10'
+                                    value={password2}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <span className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer' onClick={handlePasswordToggle}>
+                                    <Icon icon={icon} size={20}></Icon>
+                                </span>
+                                {errors.password2 && <p className='text-red-500 text-sm mt-1'>{errors.password2}</p>}
+                            </div>
                         </div>
                         <div className='flex flex-row w-6/12 justify-between my-2'>
                             <button className='button bg-blue-500 text-black py-2 px-4 rounded' type='submit'>Create Account</button>

@@ -1,12 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../Assets/uslogo.png';
+import {Icon} from 'react-icons-kit';
+import {eyeOff} from 'react-icons-kit/feather/eyeOff';
+import {eye} from 'react-icons-kit/feather/eye'
 
 const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const [type, setType] = useState('password');
+    const [icon, setIcon] = useState(eyeOff);
+
+    const handlePasswordToggle = async () => {
+        if (type === 'password') {
+            setIcon(eye);
+            setType('text');
+        }
+        else {
+            setIcon(eyeOff);
+            setType('password');
+        }
+    }
 
     const handleLogin = async () => {
         try {
@@ -65,14 +81,20 @@ const Login = () => {
                             </div>
                             <div className='flex flex-col w-6/12 gap-1 text-left'>
                                 <label htmlFor='password'>Password</label>
-                                <input
-                                    placeholder='Password'
-                                    type="password"
-                                    name="password"
-                                    className='textfield'
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)} />
+                                    <div className='relative w-full'>
+                                        <input
+                                            placeholder='Password'
+                                            type={type}
+                                            name="password"
+                                            className='textfield w-full pr-10'
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)} />
+                                            <span className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer' onClick={handlePasswordToggle}>
+                                                <Icon icon={icon} size={20}></Icon>
+                                            </span>
+                                    </div>
                             </div>
+                            <div></div>
                             <div className='flex flex-row w-6/12 justify-between my-2'>
                                 <button className='button' onClick={handleLogin}>Sign In</button>
                                 <button className='button' onClick={handleSignUp}>Sign Up</button>
